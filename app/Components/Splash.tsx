@@ -1,12 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Fragment } from "react";
-import { m, motion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useTheme } from "next-themes";
 
 export default function Splash({ onComplete }: { onComplete: () => void }) {
+  const { theme } = useTheme();
+  const [strokeColor, setStrokeColor] = useState("#000");
   useEffect(() => {
     const timer = setTimeout(() => {
       onComplete();
     }, 4000);
+    if (theme === "dark") {
+      setStrokeColor("#fff");
+    } else {
+      setStrokeColor("#000");
+    }
     return () => clearTimeout(timer);
   }, [onComplete]);
 
@@ -24,6 +32,8 @@ export default function Splash({ onComplete }: { onComplete: () => void }) {
     "M 705.029 42.969 L 667.09 61.572 A 5.334 5.334 0 0 1 666.349 61.879 Q 665.934 62.014 665.548 62.049 A 2.952 2.952 0 0 1 665.283 62.061 A 2.397 2.397 0 0 1 663.63 61.387 Q 663.064 60.871 662.598 59.961 Q 662.194 59.154 662.069 58.486 A 3.118 3.118 0 0 1 662.012 57.91 A 2.389 2.389 0 0 1 662.794 56.144 Q 663.263 55.689 664.014 55.322 L 696.826 39.6 L 664.014 23.877 A 5.266 5.266 0 0 1 663.115 23.331 Q 662.641 22.968 662.37 22.54 A 2.296 2.296 0 0 1 662.012 21.289 Q 662.012 20.41 662.598 19.238 A 5.982 5.982 0 0 1 663.168 18.32 Q 663.522 17.858 663.923 17.577 A 2.318 2.318 0 0 1 665.283 17.139 A 3.301 3.301 0 0 1 666.122 17.253 Q 666.485 17.349 666.871 17.523 A 6.085 6.085 0 0 1 667.09 17.627 L 705.029 36.231 A 6.34 6.34 0 0 1 705.788 36.656 Q 706.162 36.904 706.437 37.18 A 2.986 2.986 0 0 1 706.787 37.598 Q 707.324 38.379 707.324 39.6 Q 707.324 40.82 706.787 41.602 A 3.209 3.209 0 0 1 706.199 42.237 Q 705.726 42.635 705.029 42.969 Z",
   ];
 
+  console.log(theme);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 transition-colors duration-500">
       <svg
@@ -40,16 +50,9 @@ export default function Splash({ onComplete }: { onComplete: () => void }) {
               transition={{ delay: index / 10, duration: 1.8 }}
               d={character}
               fill="none"
-              stroke="#e2e8f0"
+              stroke={strokeColor}
               strokeWidth="3"
             ></motion.path>
-            {/* <motion.path
-              initial={{ fill: "#ffffff00" }}
-              animate={{ fill: "#ffffff" }}
-              transition={{ delay: 0.7 + index / 10, duration: 10 }}
-              fill="none"
-              d={character}
-            ></motion.path> */}
           </Fragment>
         ))}
       </svg>
