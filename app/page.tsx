@@ -1,14 +1,19 @@
 // app/page.tsx
-import Image from "next/image";
+"use client";
 import ThemeToggle from "./Components/ThemeToggle";
+import Hero from "./Components/Hero";
+import { useRef } from "react";
 
 export default function Home() {
+  const wrapperRef = useRef<HTMLDivElement>(null);
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 transition-colors duration-500">
+    <main className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-500">
       <ThemeToggle />
-      <h1 className="text-3xl font-bold text-center text-gray-900 dark:text-gray-100">
-        Sample Text
-      </h1>
+      <div className="wrapper" ref={wrapperRef}>
+        <div id="hero" className="z-10">
+          <Hero scrollContainer={wrapperRef} />
+        </div>
+      </div>
     </main>
   );
 }

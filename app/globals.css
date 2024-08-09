@@ -2,33 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+.wrapper {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  perspective: 10px;
+}
+
+/* parallax */
+.parallax {
+  position: relative;
+  min-height: 75vh;
+  min-width: 1000px;
+  width: 100%;
+  left: 50%; 
+  transform: translateX(-50%); 
+  display: grid;
+  grid-template-areas: "stack";
+}
+
+.parallax > * {
+  grid-area: stack;
+  animation: parallax linear;
+  animation-timeline: scroll();
+}
+
+.parallax > img {
+  width: 100%;
+}
+
+.parallax__stars {
+  --parallax-speed: 20;
+  z-index: 2;
+}
+
+.parallax__planets {
+  --parallax-speed: 56;
+  z-index: 3;
+}
+
+.parallax__sun {
+  --parallax-speed: 40;
+  z-index: 4;
+}
+
+.parallax__mountain1 {
+  --parallax-speed: 40;
+  z-index: 5;
+}
+
+.parallax__mountain2 {
+  --parallax-speed: 30;
+  z-index: 6;
+}
+
+.parallax__crater {
+  --parallax-speed: 10;
+  z-index: 7;
+}
+
+.parallax__content {
+  --parallax-speed: 210;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .parallax__content {
+    flex-direction: row;
+    text-align: left;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@keyframes parallax {
+  to {
+    transform: translateY(calc(var(--parallax-speed) * 1vh));
   }
 }
-
